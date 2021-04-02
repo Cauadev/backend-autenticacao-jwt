@@ -1,5 +1,7 @@
 package com.cauadev.autenticacaojwt.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,8 @@ public class UsuarioController {
 	@PostMapping("/signup")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public InfoUsuarioCadastroDTO salvar(@Valid @RequestBody Usuario usuario) {
-		if(!repository.findByUsuario(usuario.getUsuario()).isEmpty()) {
+		Optional<Usuario> vazio = Optional.empty();
+		if(repository.findByUsuario(usuario.getUsuario()) != vazio) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT,"Usuário já existente.");
 		}
 		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
