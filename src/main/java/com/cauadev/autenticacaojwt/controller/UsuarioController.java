@@ -44,6 +44,8 @@ public class UsuarioController {
 		if(repository.findByUsuario(usuario.getUsuario()) != vazio) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT,"Usuário já existente.");
 		}
+			
+
 		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaCriptografada);
 		Usuario usuarioSalvo = usuarioService.salvar(usuario);
