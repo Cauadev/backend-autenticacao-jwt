@@ -39,9 +39,7 @@ public class UsuarioServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String user){
 		Usuario usuario = repository.findByUsuario(user)
-				.orElseThrow(() ->{
-				  throw new UsernameNotFoundException("Usuário "+user+" não encontrado.");
-				});
+				.orElseThrow(() -> new UsernameNotFoundException("Usuário "+user+" não encontrado."));
 		
 		String[] roles = usuario.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
 		
